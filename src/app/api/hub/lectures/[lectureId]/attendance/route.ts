@@ -39,6 +39,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ lecture
     // This will create all attendance records in a single database query
     await prisma.attendance.createMany({
       data: attendanceRecords,
+      skipDuplicates: true, // If attendance for this lecture was already taken, it won't throw an error
     });
 
     return NextResponse.json({ message: 'Attendance saved successfully' }, { status: 201 });
